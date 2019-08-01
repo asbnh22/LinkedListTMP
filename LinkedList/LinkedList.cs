@@ -131,6 +131,9 @@ namespace LinkedList
                 }
             }
 
+            /// <summary>
+            /// Add item in sorted Linked List.
+            /// </summary>
             public void AddInSorted(T value)
             {
                 try
@@ -147,9 +150,7 @@ namespace LinkedList
                     }
                     else
                     {
-                        //var current = head;
                         Node<T> current = head;
-
                         Node<T> previous = null;
 
                         if (current > item)
@@ -163,10 +164,8 @@ namespace LinkedList
 
                             if (current > item)
                             {
-                                Node<T> new_node = item;
-                                Node<T> old_next = current.Next;
-                                new_node.Next = current;
-                                current = old_next.Next;
+                                item.Next = current;
+                                current = current.Next.Next;
                                 previous.Next = item;
                                 tail = head.Next;
                                 count++;
@@ -175,8 +174,6 @@ namespace LinkedList
                             previous = current;
                             current = current.Next;
                         }
-                        
-
                     }
                 }
                

@@ -7,7 +7,7 @@ namespace LinkedList
     {
         static void Main(string[] args)
         {
-            var list = new LinkedList<int>();
+            LinkedList<int> list = new LinkedList<int>();
 
             list.AddFirst(11);
             list.AddFirst(7);
@@ -16,6 +16,19 @@ namespace LinkedList
             list.AddFirst(1);
 
             foreach (var item in list)
+            {
+                Console.Write($"{item} ");
+            }
+            Console.WriteLine();
+
+            LinkedList<string> listString = new LinkedList<string>();
+
+            listString.AddFirst("frog");
+            listString.AddFirst("dog");
+            listString.AddFirst("cat");
+            listString.AddFirst("avocado");
+
+            foreach(var item in listString)
             {
                 Console.Write($"{item} ");
             }
@@ -41,7 +54,7 @@ namespace LinkedList
             }
             Console.WriteLine();
 
-            list.AddInSorted(6);
+            list.AddInSorted(4);
             foreach (int i in list)
             {
                 Console.Write($"{i} ");
@@ -50,6 +63,7 @@ namespace LinkedList
 
             Console.WriteLine(list.IsSorted().ToString());
 
+            Console.WriteLine(listString.IsSorted().ToString());
 
             Console.ReadLine();
         }
