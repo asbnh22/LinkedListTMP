@@ -3,7 +3,8 @@
 namespace LinkedList
 {
 
-    public class Node<T> where T : IComparable<T>
+    public class Node<T> 
+        where T : IComparable<T>
 
     {
         public T Value { get; set; }

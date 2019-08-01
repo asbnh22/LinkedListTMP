@@ -7,7 +7,9 @@ namespace LinkedList
 {
     namespace LinkedList
     {
-        public class LinkedList<T> : IEnumerable<T> where T : IComparable<T>
+        public class LinkedList<T> 
+            : IEnumerable<T> 
+            where T : IComparable<T>
         {
             private Node<T> head = null;
             private Node<T> tail = null;
@@ -49,7 +51,7 @@ namespace LinkedList
                 {
                     Console.WriteLine($"Error {e.Message}");
                 }
-                
+
             }
 
             /// <summary>
@@ -88,13 +90,13 @@ namespace LinkedList
             /// </summary>
             public T GetHead()
             {
-                
-                    if (head == null)
-                    {
-                        throw new NullReferenceException();
-                    }
-                    return head.Value;
-               
+
+                if (head == null)
+                {
+                    throw new NullReferenceException();
+                }
+                return head.Value;
+
                 /*catch (ArgumentNullException e)
                 {
                     Console.WriteLine($"Error {e.Message}");
@@ -127,8 +129,68 @@ namespace LinkedList
                 {
                     return new T[] { };
                 }
-
             }
+
+            public void AddInSorted(T value)
+            {
+                try
+                {
+                    if (value == null)
+                    {
+                        throw new ArgumentNullException(nameof(value));
+                    }
+
+                    var item = new Node<T>(value);
+                    if (head == null)
+                    {
+                        head = tail = item;
+                    }
+                    else
+                    {
+                        //var current = head;
+                        Node<T> current = head;
+
+                        Node<T> previous = null;
+
+                        if (current > item)
+                        {
+                            AddFirst(value);
+                            return;
+                        }
+
+                        while (current != null)
+                        {
+
+                            if (current > item)
+                            {
+                                Node<T> new_node = item;
+                                Node<T> old_next = current.Next;
+                                new_node.Next = current;
+                                current = old_next.Next;
+                                previous.Next = item;
+                                tail = head.Next;
+                                count++;
+                                break;
+                            }
+                            previous = current;
+                            current = current.Next;
+                        }
+                        
+
+                    }
+                }
+               
+                catch (ArgumentNullException e)
+                {
+                    Console.WriteLine($"Error {e.Message}");
+                }
+
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error {e.Message}");
+                }
+            }
+
 
             public bool IsSorted()
             {
@@ -176,7 +238,7 @@ namespace LinkedList
                 tail = null;
                 count = 0;
             }*/
-           
+
             public IEnumerator<T> GetEnumerator()
             {
                 var current = head;
@@ -186,7 +248,7 @@ namespace LinkedList
                     current = current.Next;
                 }
             }
-            
+
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return ((IEnumerable)this).GetEnumerator();

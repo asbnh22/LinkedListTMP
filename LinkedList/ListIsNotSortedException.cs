@@ -5,7 +5,8 @@ using System.Runtime.Serialization;
 namespace LinkedList
 {
     [System.Serializable]
-    class ListIsNotSortedException : ApplicationException
+    class ListIsNotSortedException 
+        : ApplicationException
     {
         public ListIsNotSortedException() { }
 
