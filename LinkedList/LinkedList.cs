@@ -20,23 +20,36 @@ namespace LinkedList
             /// <param name="value"> Value to add. </param>
             public void AddFirst(T value)
             {
-                if (value == null)
+                try
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    if (value == null)
+                    {
+                        throw new ArgumentNullException(nameof(value));
+                    }
+
+                    var item = new Node<T>(value);
+                    if (head == null)
+                    {
+                        head = tail = item;
+                    }
+                    else
+                    {
+                        tail = head;
+                        item.Next = tail;
+                        head = item;
+                    }
+                    count++;
+                }
+                catch (ArgumentNullException e)
+                {
+                    Console.WriteLine($"Error {e.Message}");
                 }
 
-                var item = new Node<T>(value);
-                if (head == null)
+                catch (Exception e)
                 {
-                    head = tail = item;
+                    Console.WriteLine($"Error {e.Message}");
                 }
-                else
-                {
-                    tail = head;
-                    item.Next = tail;
-                    head = item;
-                }
-                count++;
+                
             }
 
             /// <summary>
@@ -44,17 +57,30 @@ namespace LinkedList
             /// </summary>
             public void DeleteFirst()
             {
-                if (head == null)
+                try
                 {
-                    throw new ArgumentNullException();
+                    if (head == null)
+                    {
+                        throw new NullReferenceException();
+                    }
+                    if (count == 1)
+                    {
+                        head = tail = null;
+                    }
+                    head = tail;
+                    tail = tail.Next;
+                    count--;
                 }
-                if (count == 1)
+                catch (NullReferenceException e)
                 {
-                    head = tail = null;
+                    Console.WriteLine($"Error {e.Message}");
                 }
-                head = tail;
-                tail = tail.Next;
-                count--;
+
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error {e.Message}");
+                }
+
             }
 
             /// <summary>
@@ -62,11 +88,23 @@ namespace LinkedList
             /// </summary>
             public T GetHead()
             {
-                if (head == null)
+                
+                    if (head == null)
+                    {
+                        throw new NullReferenceException();
+                    }
+                    return head.Value;
+               
+                /*catch (ArgumentNullException e)
                 {
-                    throw new ArgumentNullException();
+                    Console.WriteLine($"Error {e.Message}");
                 }
-                return head.Value;
+
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error {e.Message}");
+                }*/
+
             }
 
             /// <summary>
@@ -94,24 +132,42 @@ namespace LinkedList
 
             public bool IsSorted()
             {
-                if (head == null)
+                try
                 {
-                    throw new ArgumentNullException();
-                }
-
-                Node<T> LeftNode = head;
-                Node<T> RightNode = head.Next;
-
-                while (RightNode != null)
-                {
-                    if (LeftNode > RightNode)
+                    if (head == null)
                     {
-                        return false;
+                        throw new NullReferenceException();
                     }
-                    LeftNode = RightNode;
-                    RightNode = LeftNode.Next;
+
+                    Node<T> LeftNode = head;
+                    Node<T> RightNode = head.Next;
+
+                    while (RightNode != null)
+                    {
+                        if (LeftNode > RightNode)
+                        {
+                            throw new ListIsNotSortedException("List is not sorted.");
+                        }
+                        LeftNode = RightNode;
+                        RightNode = LeftNode.Next;
+                    }
+                    return true;
                 }
-                return true;
+                catch (NullReferenceException e)
+                {
+                    Console.WriteLine($"Error {e.Message}");
+                }
+
+                catch (ListIsNotSortedException e)
+                {
+                    Console.WriteLine($"Error {e.Message}");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error {e.Message}");
+                }
+                return false;
+
             }
 
             /*public void Clear()
